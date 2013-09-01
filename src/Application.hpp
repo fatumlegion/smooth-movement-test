@@ -25,7 +25,8 @@ public:
 	static Application *getSingleton();
 	
 	void pushWorld(GameWorld *world);
-	void popWorld() { world.pop(); }
+	void popAllWorlds();
+	void popWorld();
 	
 	int run(int argc, char **argv);
 	void initialize();

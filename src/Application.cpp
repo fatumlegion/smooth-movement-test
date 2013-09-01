@@ -29,9 +29,32 @@ void Application::initialize()
 	forceFPS = 60;
 }
 
+void Application::release()
+{
+	popAllWorlds();
+	delete m_App;
+}
+
 void Application::pushWorld(GameWorld *world)
 {
 	this->world.push(world);
+}
+
+void Application::popWorld()
+{
+	GameWorld *world = cont_worlds.top();
+	cont_worlds.pop();
+	delete world;
+}
+
+void Application::popAllWorlds()
+{
+	for (int i = 0; i < cont_worlds.size(); ++i)
+	{
+		GameWorld *world = cont_worlds.top();
+		cont_worlds.pop();
+		delete world;
+	}
 }
 
 bool Application::parseArguments(int argc, char **argv)
@@ -113,5 +136,6 @@ int Application::run(int argc, char **argv)
 		world.top()->draw(rwin, interpolation);
 		rwin.display();
 	}
+	release();
 	return 0;
 }
